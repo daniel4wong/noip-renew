@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading;
+
 using OpenQA.Selenium;
 
 namespace noip_renew.noip
@@ -61,7 +62,14 @@ namespace noip_renew.noip
 
         public static IWebElement Get_host_confirm_button(IWebElement host)
         {
-            return host.FindElement(By.XPath(".//following-sibling::td[4]/button[contains(@class, 'btn-confirm')]"));
+            try
+            {
+                return host.FindElement(By.XPath(".//following-sibling::td[4]/button[contains(@class, 'btn-confirm')]"));
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public static int Get_host_expiration_days(IWebElement host)
@@ -87,7 +95,7 @@ namespace noip_renew.noip
             Thread.Sleep(3000);
             try
             {
-                if (host.FindElements(By.XPath("..//h2[@class='big']"))[0].Text == "Upgrade Now")
+                if (Get_host_confirm_button(host) == null)
                     return true;
             }
             catch {

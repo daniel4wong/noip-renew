@@ -1,6 +1,8 @@
 ﻿noip-renew
 
 Build:
+- Develop by VS2019
+- Use ChromeDriver right now, you can change into other driver, e.g. IEDriver, FirefoxDriver or PhantomJSDriver
 - Username and password is configurable in app.config
 
 Publish:

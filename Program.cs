@@ -1,14 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Drawing;
+using System.IO;
 
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
 using noip_renew.core;
 using noip_renew.noip;
-using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
-using System.Threading;
 
 namespace noip_renew
 {
@@ -72,14 +72,14 @@ namespace noip_renew
                 });
             }
             var service = ChromeDriverService.CreateDefaultService(Environment.CurrentDirectory);
-            service.LogPath = $@"{logDir}\chromelog.txt";
+            service.EnableVerboseLogging = false;
             service.SuppressInitialDiagnosticInformation = false;
             service.HideCommandPromptWindow = !debug;
-            service.EnableVerboseLogging = true;
-            IWebDriver driver = new ChromeDriver(service, options)
+            IWebDriver driver = new ChromeDriver(service, options, TimeSpan.FromSeconds(1000))
             {
                 Url = @"https://www.noip.com/login?ref_url=console#!/dynamic-dns"
             };
+            driver.Manage().Window.Size = new Size(1240, 1024);
             driver.Navigate();
 
             if (snapshot)
